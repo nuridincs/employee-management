@@ -1,0 +1,33 @@
+<div>
+  <h2>
+    Data Employee
+  </h2>
+  <table>
+    <tr>
+      <th>Nomer</th>
+      <th>Username</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th>birthdate</th>
+      <th>Basic Salary</th>
+      <th>Status</th>
+      <th>Group</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+    <tr *ngFor="let employee of employeeList; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ employee.username }}</td>
+      <td>{{ employee.firstName }}</td>
+      <td>{{ employee.lastName }}</td>
+      <td>{{ employee.email }}</td>
+      <td>{{ employee.birthDate }}</td>
+      <td>{{ employee.basicSalary }}</td>
+      <td>{{ employee.status }}</td>
+      <td>{{ employee.group }}</td>
+      <td>{{ employee.description }}</td>
+      <td>Edit</td>
+    </tr>
+  </table>
+</div>
