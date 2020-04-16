@@ -7,15 +7,18 @@ import employee from '../_files/employee.json';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit {
-
-
-  title = 'json-file-employee';
+  title = 'Employee';
+  dtOptions: DataTables.Settings = {};
   employeeList = employee;
 
   constructor() { }
 
   ngOnInit(): void {
-    // console.log('employeeList', employee)
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true
+    };
   }
 
 }
