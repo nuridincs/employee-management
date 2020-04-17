@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       console.log('login');
       this.router.navigate(['/employee']);
     } else {
-      console.log('password or username invalid');
+      alert('password or username invalid');
     }
   }
 

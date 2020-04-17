@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import employee from '../_files/employee.json';
 import { NgbModal, ModalDismissReasons, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -12,14 +12,28 @@ export class EmployeeComponent implements OnInit {
   title = 'Employee';
   formEmployee: FormGroup;
   submitted = false;
+  isSave = false;
   closeResult: string;
   dtOptions: DataTables.Settings = {};
   employeeList = employee;
+  dataGroups = [
+    { value: 1, label: 'Group 1' },
+    { value: 2, label: 'Group 2' },
+    { value: 3, label: 'Group 3' },
+    { value: 4, label: 'Group 4' },
+    { value: 5, label: 'Group 5' },
+    { value: 6, label: 'Group 6' },
+    { value: 7, label: 'Group 7' },
+    { value: 8, label: 'Group 8' },
+    { value: 9, label: 'Group 9' },
+    { value: 10, label: 'Group 10' }
+  ];
 
   constructor(
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    private calendar: NgbCalendar
+    private calendar: NgbCalendar,
+    private router: Router
   ) { }
 
   public today = new Date();
@@ -47,7 +61,10 @@ export class EmployeeComponent implements OnInit {
     if (this.formEmployee.invalid) {
       return;
     }
-    console.log('form', this.formEmployee.value);
+    this.isSave = true;
+    alert('Success save data');
+    location.reload();
+    // console.log('form', this.formEmployee.value);
   }
 
   selectToday() {
@@ -65,6 +82,7 @@ export class EmployeeComponent implements OnInit {
       birthDate: ['', Validators.required],
       basicSalary: ['', Validators.required],
       status: ['', Validators.required],
+      group: ['', Validators.required],
       description: ['', Validators.required],
     });
   }
