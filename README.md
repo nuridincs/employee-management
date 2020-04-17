@@ -3,8 +3,10 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
 
 ## Build Setup
+``` bash
 $ npm install
 $ ng serve --open
+```
 
 ## Development server
 
