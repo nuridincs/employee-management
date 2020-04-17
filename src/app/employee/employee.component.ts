@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import employee from '../_files/employee.json';
 import { NgbModal, ModalDismissReasons, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-employee',
@@ -10,38 +10,24 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class EmployeeComponent implements OnInit {
   title = 'Employee';
-  formEmployee = new FormGroup({
-    username: new FormControl(),
-    firtsname: new FormControl(),
-    lastname: new FormControl(),
-    birthDate: new FormControl(),
-    basicSalary: new FormControl(),
-    status: new FormControl(),
-    description: new FormControl(),
-  });
+  formEmployee: FormGroup;
+  submitted = false;
   closeResult: string;
   dtOptions: DataTables.Settings = {};
   employeeList = employee;
 
   constructor(
     private modalService: NgbModal,
+    private formBuilder: FormBuilder,
     private calendar: NgbCalendar
   ) { }
+
+  public today = new Date();
 
   open(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      this.formEmployee = new FormGroup({
-        username: new FormControl(),
-        firtsname: new FormControl(),
-        lastname: new FormControl(),
-        birthDate: new FormControl(),
-        basicSalary: new FormControl(),
-        status: new FormControl(),
-        description: new FormControl(),
-      });
     }, (reason) => {
-      console.log('close', this.closeResult);
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
@@ -57,23 +43,30 @@ export class EmployeeComponent implements OnInit {
   }
 
   save(): void{
-    this.employeeList.push({
-      id: 3,
-      username: 'test',
-      firstName: 'test',
-      lastName: 'test',
-      email: 'test.tes@gmail.com',
-      birthDate: '1995-01-01',
-      basicSalary: '2000000',
-      status: 'single',
-      group: 'test',
-      description: '2020-04-15'
-    });
+    this.submitted = true;
+    if (this.formEmployee.invalid) {
+      return;
+    }
     console.log('form', this.formEmployee.value);
   }
 
   selectToday() {
     this.formEmployee.value.birthDate = this.calendar.getToday();
+  }
+
+  get formErr() { return this.formEmployee.controls; }
+
+  dataEmployee() {
+    this.formEmployee = this.formBuilder.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      firtsname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      basicSalary: ['', Validators.required],
+      status: ['', Validators.required],
+      description: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {
@@ -82,6 +75,6 @@ export class EmployeeComponent implements OnInit {
       pageLength: 5,
       processing: true
     };
+    this.dataEmployee();
   }
-
 }

@@ -2,7 +2,7 @@
   <h2>
     Data Employee
   </h2>
-  <button class="btn btn-primary my-3" (click)="open(addEmployee)">Tambah Emlpoyee</button>
+  <button class="btn btn-primary my-3" (click)="open(addEmployee)">Add Emlpoyee</button>
   <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
     <thead>
       <tr>
@@ -32,7 +32,9 @@
         <td>{{ employee.group }}</td>
         <td>{{ employee.description }}</td> -->
         <td>
-          <button class="btn btn-warning btn-sm">Edit</button>
+          <button class="btn btn-success btn-sm" (click)="open(detailEmployee)">Detail</button>
+          |
+          <button class="btn btn-warning btn-sm" (click)="open(editEmployee)">Edit</button>
           |
           <button class="btn btn-danger btn-sm">Delete</button>
         </td>
@@ -41,7 +43,7 @@
   </table>
   <ng-template #addEmployee let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Form Tambah Employee</h4>
+      <h4 class="modal-title" id="modal-basic-title">Form Add Employee</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">×</span>
       </button>
@@ -50,32 +52,53 @@
       <form [formGroup]="formEmployee" (ngSubmit)='save()'>
         <div class="form-group">
           <label for="username">Username:</label>
-          <input formControlName="username" class="form-control" placeholder="Enter username">
+          <input type="text" formControlName="username" [ngClass]="{ 'is-invalid': submitted && formErr.username.errors, 'form-control': true}" placeholder="Enter Username" required>
+          <div *ngIf="submitted && formErr.username.errors" class="invalid-feedback">
+            <div *ngIf="formErr.username.errors.required">Username is required</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="firtsname">Firtsname:</label>
-          <input formControlName="firtsname" class="form-control" placeholder="Enter firtsname">
+          <input type="text" formControlName="firtsname" [ngClass]="{ 'is-invalid': submitted && formErr.firtsname.errors, 'form-control': true}" placeholder="Enter firtsname" required>
+          <div *ngIf="submitted && formErr.firtsname.errors" class="invalid-feedback">
+            <div *ngIf="formErr.firtsname.errors.required">firtsname is required</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="lastname">Lastname:</label>
-          <input formControlName="lastname" class="form-control" placeholder="Enter lastname" id="lastname">
+          <input type="text" formControlName="lastname" [ngClass]="{ 'is-invalid': submitted && formErr.lastname.errors, 'form-control': true}" placeholder="Enter lastname" required>
+          <div *ngIf="submitted && formErr.lastname.errors" class="invalid-feedback">
+            <div *ngIf="formErr.lastname.errors.required">lastname is required</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="email">Email address:</label>
-          <input type="email" class="form-control" placeholder="Enter email" id="email">
+          <input type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && formErr.email.errors, 'form-control': true}" placeholder="Enter email" required [email]="true">
+          <div *ngIf="submitted && formErr.email.errors" class="invalid-feedback">
+            <div *ngIf="formErr.email.errors.required">email is required</div>
+            <div *ngIf="formErr.email.errors.email">Email must be a valid email address</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="birthDate">BirthDate:</label>
-          <!-- <input formControlName="birthDate" class="form-control" placeholder="Enter birthdate" type="text" ngbDatepicker #d="ngbDatepicker"> -->
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="birthDate" bsDatepicker>
+          <input formControlName="birthDate" [bsConfig]="{ dateInputFormat: 'MMM DD YYYY' }" [ngClass]="{ 'is-invalid': submitted && formErr.birthDate.errors, 'form-control': true}" placeholder="Enter birthDate" required bsDatepicker [maxDate]="today">
+          <div *ngIf="submitted && formErr.birthDate.errors" class="invalid-feedback">
+            <div *ngIf="formErr.birthDate.errors.required">birthDate is required</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="basicSalary">Basic Salary:</label>
-          <input formControlName="basicSalary" class="form-control" placeholder="Enter basic salary" id="basicSalary">
+          <input type="number" formControlName="basicSalary" [ngClass]="{ 'is-invalid': submitted && formErr.basicSalary.errors, 'form-control': true}" placeholder="Enter basicSalary" required>
+          <div *ngIf="submitted && formErr.basicSalary.errors" class="invalid-feedback">
+            <div *ngIf="formErr.basicSalary.errors.required">basicSalary is required</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="status">Status:</label>
-          <input formControlName="status" class="form-control" placeholder="Enter status" id="status">
+          <input type="text" formControlName="status" [ngClass]="{ 'is-invalid': submitted && formErr.status.errors, 'form-control': true}" placeholder="Enter status" required>
+          <div *ngIf="submitted && formErr.status.errors" class="invalid-feedback">
+            <div *ngIf="formErr.status.errors.required">status is required</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="group">Group:</label>
@@ -86,12 +109,45 @@
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <input formControlName="description" class="form-control" placeholder="Enter description" id="description">
+          <input type="text" formControlName="description" [ngClass]="{ 'is-invalid': submitted && formErr.description.errors, 'form-control': true}" placeholder="Enter description" required>
+          <div *ngIf="submitted && formErr.description.errors" class="invalid-feedback">
+            <div *ngIf="formErr.description.errors.required">description is required</div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="submit" class="btn btn-primary">Save</button>
         </div>
       </form>
+    </div>
+  </ng-template>
+
+  <ng-template #detailEmployee let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Detail Employee</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h4>Detail Employee</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger btn-block" (click)="modal.dismiss()">OK</button>
+    </div>
+  </ng-template>
+
+  <ng-template #editEmployee let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit Employee</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h4>Edit Employee</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger btn-block" (click)="modal.dismiss()">OK</button>
     </div>
   </ng-template>
 </div>
