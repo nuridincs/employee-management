@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
-    NgSelectModule
+    NgSelectModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

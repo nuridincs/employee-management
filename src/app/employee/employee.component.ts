@@ -3,10 +3,12 @@ import employee from '../_files/employee.json';
 import { NgbModal, ModalDismissReasons, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService } from './../api.service';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss']
+  styleUrls: ['./employee.component.scss'],
+  providers: [ApiService]
 })
 export class EmployeeComponent implements OnInit {
   title = 'Employee';
@@ -15,7 +17,10 @@ export class EmployeeComponent implements OnInit {
   isSave = false;
   closeResult: string;
   dtOptions: DataTables.Settings = {};
-  employeeList = employee;
+  // employeeList = employee;
+  employeeList = [];
+  employeeDtl: any;
+
   dataGroups = [
     { value: 1, label: 'Group 1' },
     { value: 2, label: 'Group 2' },
@@ -33,12 +38,16 @@ export class EmployeeComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private calendar: NgbCalendar,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) { }
 
   public today = new Date();
 
-  open(content: any) {
+  open(content: any, id: any) {
+    if (id) {
+      this.getDetail(id);
+    }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -87,6 +96,19 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
+  getData() {
+    this.apiService.getAll().subscribe((data: any) => {
+      this.employeeList = data.result;
+    });
+  }
+
+  getDetail(id: number) {
+    this.apiService.getDetail(id).subscribe((data: any) => {
+      // console.log('detail data', data);
+      this.employeeDtl = JSON.parse(JSON.stringify(data.result));
+    });
+  }
+
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -94,5 +116,6 @@ export class EmployeeComponent implements OnInit {
       processing: true
     };
     this.dataEmployee();
+    this.getData();
   }
 }

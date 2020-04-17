@@ -2,20 +2,14 @@
   <h2>
     Data Employee
   </h2>
-  <button class="btn btn-primary my-3" (click)="open(addEmployee)">Add Emlpoyee</button>
+  <button class="btn btn-primary my-3" (click)="open(addEmployee, '')">Add Emlpoyee</button>
   <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
     <thead>
       <tr>
         <th>Nomor</th>
         <th>Username</th>
-        <!-- <th>Firstname</th>
-        <th>Lastname</th> -->
         <th>Email</th>
-        <!-- <th>birthdate</th> -->
         <th>Basic Salary</th>
-        <!--  <th>Status</th>
-        <th>Group</th>
-        <th>Description</th> -->
         <th>Action</th>
       </tr>
     </thead>
@@ -23,18 +17,12 @@
       <tr *ngFor="let employee of employeeList; let i = index">
         <td>{{ i + 1 }}</td>
         <td>{{ employee.username }}</td>
-        <!--  <td>{{ employee.firstName }}</td>
-        <td>{{ employee.lastName }}</td> -->
         <td>{{ employee.email }}</td>
-        <!--  <td>{{ employee.birthDate }}</td> -->
-        <td>{{ employee.basicSalary }}</td>
-        <!--  <td>{{ employee.status }}</td>
-        <td>{{ employee.group }}</td>
-        <td>{{ employee.description }}</td> -->
+        <td>{{ employee.basic_salary }}</td>
         <td>
-          <button class="btn btn-success btn-sm" (click)="open(detailEmployee)">Detail</button>
+          <button class="btn btn-success btn-sm" (click)="open(detailEmployee, employee.id)">Detail</button>
           |
-          <button class="btn btn-warning btn-sm" (click)="open(editEmployee)">Edit</button>
+          <button class="btn btn-warning btn-sm" (click)="open(editEmployee, employee.id)">Edit</button>
           |
           <button class="btn btn-danger btn-sm">Delete</button>
         </td>
@@ -129,7 +117,44 @@
       </button>
     </div>
     <div class="modal-body">
-      <h4>Detail Employee</h4>
+      <div *ngFor="let employee of employeeDtl">
+        <div class="row">
+          <div class="col">Username</div>
+          <div class="col">{{ employee.username }}</div>
+        </div>
+        <div class="row">
+          <div class="col">Firtsname</div>
+          <div class="col">{{ employee.firstname }}</div>
+        </div>
+        <div class="row">
+          <div class="col">Lastname</div>
+          <div class="col">{{ employee.lastname }}</div>
+        </div>
+        <div class="row">
+          <div class="col">Email</div>
+          <div class="col">{{ employee.email }}</div>
+        </div>
+        <div class="row">
+          <div class="col">Basic Salary</div>
+          <div class="col">{{ employee.basic_salary | currency:'IDR' }}</div>
+        </div>
+        <div class="row">
+          <div class="col">status</div>
+          <div class="col">{{ employee.status }}</div>
+        </div>
+        <div class="row">
+          <div class="col">Birthday</div>
+          <div class="col">{{ employee.birthdate }}</div>
+        </div>
+        <div class="row">
+          <div class="col">Group</div>
+          <div class="col">{{ employee.group }}</div>
+        </div>
+        <div class="row">
+          <div class="col">Description</div>
+          <div class="col">{{ employee.description }}</div>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="submit" class="btn btn-danger btn-block" (click)="modal.dismiss()">OK</button>
