@@ -2,20 +2,20 @@
   <h2>
     Data Employee
   </h2>
-  <button class="btn btn-primary">Add</button>
+  <button class="btn btn-primary my-3" (click)="open(addEmployee)">Tambah Emlpoyee</button>
   <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
     <thead>
       <tr>
-        <th>Nomer</th>
+        <th>Nomor</th>
         <th>Username</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
+        <!-- <th>Firstname</th>
+        <th>Lastname</th> -->
         <th>Email</th>
-        <th>birthdate</th>
+        <!-- <th>birthdate</th> -->
         <th>Basic Salary</th>
-        <th>Status</th>
+        <!--  <th>Status</th>
         <th>Group</th>
-        <th>Description</th>
+        <th>Description</th> -->
         <th>Action</th>
       </tr>
     </thead>
@@ -23,14 +23,14 @@
       <tr *ngFor="let employee of employeeList; let i = index">
         <td>{{ i + 1 }}</td>
         <td>{{ employee.username }}</td>
-        <td>{{ employee.firstName }}</td>
-        <td>{{ employee.lastName }}</td>
+        <!--  <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td> -->
         <td>{{ employee.email }}</td>
-        <td>{{ employee.birthDate }}</td>
+        <!--  <td>{{ employee.birthDate }}</td> -->
         <td>{{ employee.basicSalary }}</td>
-        <td>{{ employee.status }}</td>
+        <!--  <td>{{ employee.status }}</td>
         <td>{{ employee.group }}</td>
-        <td>{{ employee.description }}</td>
+        <td>{{ employee.description }}</td> -->
         <td>
           <button class="btn btn-warning btn-sm">Edit</button>
           |
@@ -39,4 +39,59 @@
       </tr>
     </tbody>
   </table>
+  <ng-template #addEmployee let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Form Tambah Employee</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formEmployee" (ngSubmit)='save()'>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input formControlName="username" class="form-control" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+          <label for="firtsname">Firtsname:</label>
+          <input formControlName="firtsname" class="form-control" placeholder="Enter firtsname">
+        </div>
+        <div class="form-group">
+          <label for="lastname">Lastname:</label>
+          <input formControlName="lastname" class="form-control" placeholder="Enter lastname" id="lastname">
+        </div>
+        <div class="form-group">
+          <label for="email">Email address:</label>
+          <input type="email" class="form-control" placeholder="Enter email" id="email">
+        </div>
+        <div class="form-group">
+          <label for="birthDate">BirthDate:</label>
+          <!-- <input formControlName="birthDate" class="form-control" placeholder="Enter birthdate" type="text" ngbDatepicker #d="ngbDatepicker"> -->
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="birthDate" bsDatepicker>
+        </div>
+        <div class="form-group">
+          <label for="basicSalary">Basic Salary:</label>
+          <input formControlName="basicSalary" class="form-control" placeholder="Enter basic salary" id="basicSalary">
+        </div>
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <input formControlName="status" class="form-control" placeholder="Enter status" id="status">
+        </div>
+        <div class="form-group">
+          <label for="group">Group:</label>
+          <select id="group" class="form-control">
+            <option *ngFor="let i = index">Group {{ i }}</option>
+          </select>
+          <!-- <input formControlName="firtsname" class="form-control" placeholder="Enter group" id="group"> -->
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input formControlName="description" class="form-control" placeholder="Enter description" id="description">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
 </div>
