@@ -46,7 +46,7 @@ export class EmployeeComponent implements OnInit {
 
   open(content: any, id: any) {
     if (id) {
-      this.getDetail(id);
+      // this.getDetail(id);
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -102,12 +102,12 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
-  getDetail(id: number) {
-    this.apiService.getDetail(id).subscribe((data: any) => {
-      // console.log('detail data', data);
-      this.employeeDtl = JSON.parse(JSON.stringify(data.result));
-    });
-  }
+  // getDetail(id: number) {
+  //   this.apiService.getDetail(id).subscribe((data: any) => {
+  //     // console.log('detail data', data);
+  //     this.employeeDtl = JSON.parse(JSON.stringify(data.result));
+  //   });
+  // }
 
   ngOnInit(): void {
     this.dtOptions = {

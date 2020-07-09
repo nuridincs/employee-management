@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent, EmployeeComponent } from './utils/index.pages';
+import { MainComponent, EmployeeComponent, AppComponent } from './utils/index.pages';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: MainComponent
   },
   {
     path: 'employee',
-    component: EmployeeComponent
+    component: EmployeeComponent,
+    children: [
+      {
+        path: 'addEmployee',
+        component: AppComponent
+      }
+    ]
   }
 ];
 

@@ -18,7 +18,7 @@
         <td>{{ i + 1 }}</td>
         <td>{{ employee.username }}</td>
         <td>{{ employee.email }}</td>
-        <td>{{ employee.basic_salary }}</td>
+        <td>{{ employee.basic_salary | currency: 'IDR' }}</td>
         <td>
           <button class="btn btn-success btn-sm" (click)="open(detailEmployee, employee.id)">Detail</button>
           |
@@ -136,7 +136,7 @@
         </div>
         <div class="row">
           <div class="col">Basic Salary</div>
-          <div class="col">{{ employee.basic_salary | currency:'IDR' }}</div>
+          <div class="col">{{ employee.basic_salary | currency: 'IDR' }}</div>
         </div>
         <div class="row">
           <div class="col">status</div>
